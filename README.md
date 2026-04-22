@@ -1,27 +1,20 @@
 # Portfolio (Ganesh Suraj)
 
-Interactive portfolio site with a **name gate**, a **SQLite visitor log**, and a **3D hero**.
+Interactive portfolio site with a name gate and visitor capture through Netlify Forms.
 
-## Run locally
+## Deploy on Netlify
 
-```powershell
-python server.py
-```
+1. Push this repo to GitHub.
+2. In Netlify, create a new site from GitHub.
+3. Set the publish directory to `site`.
+4. Deploy.
 
-Then open:
-- `http://127.0.0.1:8000/`
-- Admin: `http://127.0.0.1:8000/admin`
+## Visitor capture
 
-## Admin security (recommended before sharing)
+The entry gate submits names to the hidden Netlify form named `visitor-log`.
+Open `https://app.netlify.com/` and view the site's **Forms** submissions to see visitors.
 
-Set an admin password (enables Basic Auth for `/api/admin/visits`):
+## Local preview
 
-```powershell
-$env:ADMIN_PASSWORD="your-strong-password"
-python server.py
-```
-
-## Data
-
-Visitor entries are stored in `data/visitors.sqlite3` (ignored by git).
+You can still run a simple static server for preview, but Netlify deployment does not use `server.py`.
 

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Portfolio Admin — Visitors</title>
+    <title>Portfolio Admin - Netlify Forms</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body class="admin">
@@ -17,7 +17,7 @@
           <a href="/">Portfolio</a>
         </nav>
         <div class="nav-right">
-          <button id="refresh" class="btn btn-ghost" type="button">Refresh</button>
+          <a class="btn btn-ghost" href="https://app.netlify.com/" target="_blank" rel="noreferrer">Netlify Dashboard</a>
         </div>
       </div>
     </header>
@@ -26,44 +26,23 @@
       <section class="section">
         <div class="section-head">
           <h2>Visitor Log</h2>
-          <p>Names captured on entry, stored in SQLite.</p>
+          <p>Visitor names are submitted to Netlify Forms and can be viewed in the Netlify dashboard.</p>
         </div>
 
-        <div class="admin-controls card">
-          <div class="admin-row">
-            <label class="admin-label">
-              <span class="muted">Search</span>
-              <input id="q" class="admin-input" placeholder="Type a name, IP, or UA…" />
-            </label>
-            <label class="admin-label">
-              <span class="muted">Limit</span>
-              <input id="limit" class="admin-input" type="number" min="1" max="5000" value="500" />
-            </label>
-            <button id="exportCsv" class="btn btn-primary" type="button">Export CSV</button>
-          </div>
-          <div id="securityHint" class="muted"></div>
-        </div>
-
-        <div class="card">
-          <div class="table-wrap">
-            <table class="table" aria-label="Visitor log">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Visited At (UTC)</th>
-                  <th>IP</th>
-                  <th>User Agent</th>
-                </tr>
-              </thead>
-              <tbody id="rows"></tbody>
-            </table>
+        <div class="card admin-card">
+          <h3>How to view visitors</h3>
+          <ol class="admin-list">
+            <li>Open your site in Netlify.</li>
+            <li>Go to Site overview or Forms.</li>
+            <li>Open the <strong>visitor-log</strong> form submissions.</li>
+          </ol>
+          <p class="muted">Each accepted visitor name is captured when they enter the portfolio gate.</p>
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="https://app.netlify.com/" target="_blank" rel="noreferrer">Open Netlify</a>
+            <a class="btn btn-ghost" href="/">Back to Portfolio</a>
           </div>
         </div>
       </section>
     </main>
-
-    <script type="module" src="/admin.js"></script>
   </body>
 </html>
-

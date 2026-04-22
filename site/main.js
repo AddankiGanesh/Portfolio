@@ -1,4 +1,4 @@
-const $ = (sel, root = document) => root.querySelector(sel);
+﻿const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
 function clamp(v, a, b) {
@@ -24,11 +24,19 @@ function initTheme() {
 }
 
 async function postVisit(name) {
+  const payload = new URLSearchParams({
+    "form-name": "visitor-log",
+    "bot-field": "",
+    name,
+    visited_at: new Date().toISOString(),
+    source: window.location.origin,
+  });
+
   try {
-    const res = await fetch("/api/visit", {
+    const res = await fetch("/", {
       method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ name }),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payload.toString(),
     });
     return res.ok;
   } catch {
@@ -61,15 +69,19 @@ function initGate() {
     e.preventDefault();
     const name = (input?.value || "").trim().replace(/\s+/g, " ");
     if (!name || name.length > 60) {
-      if (hint) hint.textContent = "Please enter a short name (1–60 chars).";
+      if (hint) hint.textContent = "Please enter a short name (1-60 chars).";
       return;
     }
-    if (hint) hint.textContent = "Saving…";
+    if (hint) hint.textContent = "Saving...";
     const ok = await postVisit(name);
     localStorage.setItem("viewerName", name);
     if (hello) hello.textContent = `Hi, ${name}`;
     if (!ok) localStorage.setItem("pendingVisitName", name);
-    if (hint) hint.textContent = ok ? "Welcome." : "Welcome (offline log will sync later).";
+    if (hint) {
+      hint.textContent = ok
+        ? "Welcome."
+        : "Welcome. If the network is unavailable, we will retry on the next visit.";
+    }
     setTimeout(() => gate?.remove(), 400);
   });
 }
@@ -222,7 +234,7 @@ function initSkillStacks() {
 
     const hint = document.createElement("div");
     hint.className = "skill-hint";
-    hint.textContent = "Hover to lift • Click to highlight projects";
+    hint.textContent = "Hover to lift â€¢ Click to highlight projects";
     stack.appendChild(hint);
 
     for (let i = 0; i < list.length; i++) {
@@ -486,7 +498,7 @@ async function initHero3D() {
     if (hint && hint.textContent.includes("reduced")) {
       // keep reduced hint
     } else if (hint && dt > 0) {
-      hint.textContent = "Move • Drag • Scroll";
+      hint.textContent = "Move â€¢ Drag â€¢ Scroll";
     }
 
     requestAnimationFrame(tick);
@@ -533,7 +545,7 @@ function initBackground3D() {
     { passive: true }
   );
 
-  // Creative 3D background: a drifting “constellation mesh” in 3D space with parallax.
+  // Creative 3D background: a drifting â€œconstellation meshâ€ in 3D space with parallax.
   const points = [];
   const count = 140;
   const box = { x: 10.0, y: 6.0, z: 10.0 };
@@ -619,7 +631,7 @@ function initBackground3D() {
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, w, h);
 
-    // secondary glow to avoid “only in middle” feeling
+    // secondary glow to avoid â€œonly in middleâ€ feeling
     const glow2 = ctx.createRadialGradient(w * 0.15, h * 0.82, 10, w * 0.15, h * 0.82, Math.max(w, h) * 0.75);
     glow2.addColorStop(0, `rgba(${colors.c3},0.07)`);
     glow2.addColorStop(1, "rgba(0,0,0,0)");
@@ -649,7 +661,7 @@ function initBackground3D() {
     const projected = new Array(points.length);
     for (let i = 0; i < points.length; i++) {
       let v = rotY(rotX(points[i], rx * 0.9), ry * 0.9);
-      // Subtle “camera bob”
+      // Subtle â€œcamera bobâ€
       v.y += Math.sin(time * 0.35) * 0.12;
       const pr = project(v, scale, fov);
       projected[i] = {
@@ -716,3 +728,4 @@ initTilt();
 initSkillStacks();
 initReveal();
 initBackground3D();
+
